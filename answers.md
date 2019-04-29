@@ -1,3 +1,2 @@
 1) Elevens, Tens, and Thirteens are all the same game, they just have a different number of cards on the board, and a different total for them to add up to. THey have the same variables and functions, they are just adjusted slightly
 2) ElevensBoard Extends Board
-3)
