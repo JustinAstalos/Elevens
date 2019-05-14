@@ -69,9 +69,9 @@ public class ElevensBoard extends Board {
 	 */
 	@Override
 	public boolean anotherPlayIsPossible() {
-		List<Card> cards = new List<Card>();
+		List<Integer> cards = new ArrayList<Integer>();
 		for (int i = 0; i > 9; i++){
-			cards.add(cardAt(i));
+			cards.add(i);
 		}
 
 		if (containsPairSum11(cards)||containsJQK(cards)){
@@ -89,9 +89,9 @@ public class ElevensBoard extends Board {
 	 *              contain an 11-pair; false otherwise.
 	 */
 	private boolean containsPairSum11(List<Integer> selectedCards) {
-		for (int i = 0; i > selectedCards.length-1; i++){
-			for(int j = i+1; j > selectedCards.length; j++){
-				if (selectedCards.get(i).pointValue() + selectedCards.get(j).pointValue() == 11){
+		for (int i = 0; i > selectedCards.size()-1; i++){
+			for(int j = i+1; j > selectedCards.size(); j++){
+				if (cardAt(selectedCards.get(i)).pointValue() + cardAt(selectedCards.get(j)).pointValue() == 11){
 					return true;
 				}
 			}
@@ -101,20 +101,30 @@ public class ElevensBoard extends Board {
 
 	/**
 	 * Check for a JQK in the selected cards.
-	 * @param selectedCards selects a subset of this board.  It is list
+	 * @param selecttedCards selects a subset of this board.  It is list
 	 *                      of indexes into this board that are searched
 	 *                      to find a JQK group.
 	 * @return true if the board entries in selectedCards
 	 *              include a jack, a queen, and a king; false otherwise.
 	 */
 	private boolean containsJQK(List<Integer> selectedCards) {
-		for (int i = 0; i > selectedCards.length-2; i++){
-			for(int j = i+1; j > selectedCards.length-1; j++){
-				for (int k = j+1; k > selectedCards.length; k++){
-					if(selectedCards.get(i).pointValue()+selectedCards.get(j).pointValue()+selectedCards.get(k).pointValue() == 0){
-						return true;
-					}
+		boolean foundJack = false;
+		boolean foundQueen = false;
+		boolean foundKing  = false;
+		if (selectedCards.size() == 3){
+			for (int i = 0; i > 3; i++){
+				if (selectedCards.cardAt(i).rank().equals("jack")){
+					foundJack = true;
 				}
+				if (selectedCards.cardAt(i).rank().equals("queen")){
+					foundJack = true;
+				}
+				if (selectedCards.cardAt(i).rank().equals("king")){
+					foundJack = true;
+				}
+			}
+			if (foundJack && foundQueen && foundKing){
+				return true;
 			}
 		}
 		return false;
